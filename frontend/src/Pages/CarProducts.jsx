@@ -69,7 +69,7 @@ Get_Car()
   setOrigData(res);
 
 })
-fetch("https://difficult-buckle-ray.cyclic.app/oem").then((res)=>res.json())
+fetch("https://difficult-buckle-ray.cyclic.app/cars/oem").then((res)=>res.json())
     .then((res)=>{
         console.log(res);
         setOemdata(res);

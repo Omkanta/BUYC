@@ -1,7 +1,9 @@
-import { Button, Image, Text } from '@chakra-ui/react'
+import { Button, Image, Text, useToast } from '@chakra-ui/react'
 import React from 'react'
 
 const SingleCar = ({img,model_name,s_name,location,userID,loggedID,_id}) => {
+  const toast = useToast()
+
   function HandleDelete(_id){
     fetch(`https://difficult-buckle-ray.cyclic.app/cars/delete/${_id}`,{
         method:"DELETE",
@@ -22,7 +24,15 @@ const SingleCar = ({img,model_name,s_name,location,userID,loggedID,_id}) => {
       {(userID==loggedID)?<>
       <Button>Edit</Button>
       <Button onClick={()=>{HandleDelete(_id)}} >Delete</Button>
-      </>:<></>}
+      </>:<><Button onClick={       
+         toast({
+          positions:"top",
+          title: 'Sorry.',
+          description: "This feature has not been implemented yet.",
+          status: 'warning',
+          duration: 3000,
+          isClosable: true,
+        })}>Contact Seller</Button></>}
   </div>
   )
 }
