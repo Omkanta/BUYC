@@ -24,15 +24,14 @@ const SingleCar = ({img,model_name,s_name,location,userID,loggedID,_id}) => {
       {(userID==loggedID)?<>
       <Button>Edit</Button>
       <Button onClick={()=>{HandleDelete(_id)}} >Delete</Button>
-      </>:<><Button onClick={       
-         toast({
+      </>:<><Button onClick={()=>{ toast({
           positions:"top",
           title: 'Sorry.',
           description: "This feature has not been implemented yet.",
           status: 'warning',
           duration: 3000,
           isClosable: true,
-        })}>Contact Seller</Button></>}
+        })}}>Contact Seller</Button></>}
   </div>
   )
 }
