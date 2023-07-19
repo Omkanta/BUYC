@@ -2,7 +2,7 @@ import { LOGIN_FAILURE, LOGIN_PENDING, LOGIN_SUCCESSFULL } from "./actionType";
 
 //User Login 
 export const User_Login=(obj)=>(dispatch)=>{
-    console.log(obj);
+    // console.log(obj);
     dispatch({type:LOGIN_PENDING})
       return  fetch("https://difficult-buckle-ray.cyclic.app/users/login",{
         method:"POST",
