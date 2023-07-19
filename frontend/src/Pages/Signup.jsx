@@ -18,7 +18,7 @@ const Signup = () => {
 
   function HandleSignup(e){
     e.preventDefault()
-    let obj={email,password}
+    let obj={email,password,name,location,"phone":+phone}
     dispatch(User_Signup(obj))
     .then((res)=>{
       if(res){

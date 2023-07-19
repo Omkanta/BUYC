@@ -12,9 +12,16 @@ export const User_Login=(obj)=>(dispatch)=>{
         body:JSON.stringify(obj)
         }).then((res)=>res.json())
         .then((res)=>{
-            console.log(res);
-            dispatch({type:LOGIN_SUCCESSFULL,payload:res.token});
-            return true;
+            // console.log(res);
+            if(res.token){
+                let data={"token":res.token,"userID":res.userID}
+                // console.log(data);
+                dispatch({type:LOGIN_SUCCESSFULL,payload:data});
+                return true;
+            }else{
+                return false
+            }
+
         })
         .catch((er)=>{console.log(er);
             dispatch({type:LOGIN_FAILURE})

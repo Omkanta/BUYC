@@ -17,23 +17,28 @@ const Login = () => {
     let obj={email,password}
     dispatch(User_Login(obj))
     .then((res)=>{
-      toast({
-        position:"top",
-        title: 'Login successfull.',
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
-      navitage("/cars")
+      if(res){
+        toast({
+          position:"top",
+          title: 'Login successfull.',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+        navitage("/cars")
+      }else{
+        toast({
+          position:"top",
+          title: 'Login Unsuccessfull.',
+          description: "Please check your credentails.",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+      }
+
     }).catch((err)=>{
-      toast({
-        position:"top",
-        title: 'Login Unsuccessfull.',
-        description: "Please check your credentails.",
-        status: 'success',
-        duration: 3000,
-        isClosable: true,
-      })
+
       console.log(err);
     })
 
