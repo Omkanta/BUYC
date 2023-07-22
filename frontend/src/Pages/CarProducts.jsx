@@ -16,6 +16,7 @@ const CarProducts = () => {
   const [model_name,setModelName]=useState('');
   const [model_year,setModelYear]=useState('');
   const [img,setImg]=useState('');
+  const [refresh,setRefresh]=useState(false);
   const toast = useToast()
 
   let dispatch=useDispatch();
@@ -48,6 +49,17 @@ dispatch(Add_Car(obj)).then((res)=>{
       duration: 3000,
       isClosable: true,
     })
+    setRefresh((prev)=>!prev);
+    onClose();
+    setodometer("");
+    setNo_scratches("")
+    setNo_accidents("")
+    setOrig_paint('')
+    setPrev_buyers('')
+    setReg_place('')
+    setModelName('')
+    setModelYear('')
+    setImg('');
   }else{
     toast({
       positions:"top",
@@ -74,7 +86,7 @@ fetch("https://difficult-buckle-ray.cyclic.app/cars/oem").then((res)=>res.json()
         console.log(res);
         setOemdata(res);
     }).catch(err=>console.log(err))
-  },[])
+  },[refresh])
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -86,13 +98,13 @@ fetch("https://difficult-buckle-ray.cyclic.app/cars/oem").then((res)=>res.json()
             Select Your Car Model <Select mb='2' value={model_name} onChange={(e)=>setModelName(e.target.value)}>
              <option value=''>--Select Car Model--</option>
               {oemData?.map((el)=>{
-                return <option value={el.model_name}>{el.model_name}</option>
+                return <option key={el._id} value={el.model_name}>{el.model_name}</option>
               })}
             </Select>
             Select Model Year of Your Car<Select mb='2' value={model_year} onChange={(e)=>setModelYear(e.target.value)}>
             <option value=''>--Select Year Model of Car--</option>
               {oemData?.map((el,index)=>{
-                return <option value={index+2010}>{index+2010}</option>
+                return <option key={el._id} value={index+2010}>{index+2010}</option>
               })}
             </Select>
           KMs on Oodometer <Input mb='2' placeholder='Enter KMs' type='nunber' value={odometer} onChange={(e)=>setodometer(e.target.value)}/>
@@ -119,9 +131,9 @@ fetch("https://difficult-buckle-ray.cyclic.app/cars/oem").then((res)=>res.json()
         <Button onClick={onOpen} mr='10' bg={'blue.500'} color={'white'} _hover={{bg:'blue.600',color:"white"}}>Sell Your Car</Button>
 
         </Box>
-        <Grid gridTemplateColumns={"repeat(3,auto)"}>
+        <Grid gridTemplateColumns={"repeat(2,auto)"} mt='5' gap='5'>
           {Orig_data.map((el,index)=>{
-              return <SingleCar key={index} loggedID={userID} {...el} />
+              return <SingleCar key={el._id} loggedID={userID} oemData={oemData} setRef={setRefresh} {...el} />
           })}
         </Grid>
       </Box>
