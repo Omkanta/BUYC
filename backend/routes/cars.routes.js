@@ -13,9 +13,16 @@ cloudinary.config({
 const carRouter=express.Router();
 
 carRouter.get("/",async(req,res)=>{
+    
     try {
-        const car=await CarModel.find();
-        res.status(200).send(car)
+        if( req.query.color){
+            const car=await CarModel.find({orig_paint:req.query.color});
+            res.status(200).send(car)
+        }else{
+            const car=await CarModel.find();
+            res.status(200).send(car)
+        }
+
     } catch (error) {
         res.status(400).send({"err":error.message})
     }
