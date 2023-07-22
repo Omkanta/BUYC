@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text, useDisclosure, useToast } from '@chakra-ui/react'
+import { Box, Button, Flex, Grid, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import SingleCar from './SingleCar'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +16,7 @@ const CarProducts = () => {
   const [model_name,setModelName]=useState('');
   const [model_year,setModelYear]=useState('');
   const [img,setImg]=useState('');
+  const [filterData,setfilterData]=useState('')
   const [refresh,setRefresh]=useState(false);
   const toast = useToast()
 
@@ -29,7 +30,6 @@ const CarProducts = () => {
 let obj={
   "odometer":+odometer,
   "no_scratches":+no_scratches,
-  "no_accidents":+no_accidents,
   "no_accidents":+no_accidents,
   orig_paint,
   'prev_buyers':+prev_buyers,
@@ -73,20 +73,22 @@ dispatch(Add_Car(obj)).then((res)=>{
 })
   }
 
-
-
-  useEffect(()=>{
-Get_Car()
+function ShowData(){
+  Get_Car(filterData)
 .then((res)=>{
   setOrigData(res);
 
 })
+}
+
+  useEffect(()=>{
+ShowData()
 fetch("https://difficult-buckle-ray.cyclic.app/cars/oem").then((res)=>res.json())
     .then((res)=>{
-        console.log(res);
+        // console.log(res);
         setOemdata(res);
     }).catch(err=>console.log(err))
-  },[refresh])
+  },[refresh,filterData])
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -129,10 +131,37 @@ fetch("https://difficult-buckle-ray.cyclic.app/cars/oem").then((res)=>res.json()
         <Text fontSize={'30'} mt='5' mb='5' fontWeight={'semibold'} textAlign={'center'}>Buy & Sell Used Cars</Text>
         <Box>
         <Button onClick={onOpen} mr='10' bg={'blue.500'} color={'white'} _hover={{bg:'blue.600',color:"white"}}>Sell Your Car</Button>
-
         </Box>
+        <Flex mt='5' mb='3' justifyContent={'space-evenly'}>
+              <Box display={'flex'}>
+              Sort based on Price:
+              <Select>
+                <option>Low to High</option>
+                <option>High to Low</option>
+              </Select>
+              </Box>
+<Box display={'flex'}>
+Sort based on Mileage:
+              <Select>
+                <option>Low to High</option>
+                <option>High to Low</option>
+              </Select>
+</Box>
+<Box display={'flex'}>
+Filter based on Color:
+              <Select value={filterData} onChange={(e)=>setfilterData(e.target.value)}>
+              <option value={''}>--Choose Car Color--</option>
+                <option value={'red'}>Red</option>
+                <option value={'white'}>White</option>
+                <option value={'black'}>Black</option>
+                <option value={'grey'}>Grey</option>
+                <option value={'blue'}>Blue</option>
+                <option value={'brown'}>Brown</option>
+              </Select>
+</Box>
+        </Flex>
         <Grid gridTemplateColumns={"repeat(2,auto)"} mt='5' gap='5'>
-          {Orig_data.map((el,index)=>{
+          {Orig_data?.map((el,index)=>{
               return <SingleCar key={el._id} loggedID={userID} oemData={oemData} setRef={setRefresh} {...el} />
           })}
         </Grid>

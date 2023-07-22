@@ -16,7 +16,7 @@ const SingleCar = ({img,model_name,reg_place,model_year,userID,loggedID,_id,setR
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   function HandleDelete(_id){
-    fetch(`http://localhost:8080/cars/delete/${_id}`,{
+    fetch(`https://difficult-buckle-ray.cyclic.app/cars/delete/${_id}`,{
         method:"DELETE",
         headers:{
             "Content-type":"application/json",
@@ -48,9 +48,9 @@ obj["orig_paint"]=temp_orig_paint;
 obj["prev_buyers"]=+temp_prev_buyers;
 obj["reg_place"]=temp_reg_place;
 obj["img"]=temp_img;
-console.log(obj);
+// console.log(obj);
 
-fetch(`http://localhost:8080/cars/edit/${_id}`,{
+fetch(`https://difficult-buckle-ray.cyclic.app/cars/edit/${_id}`,{
         method:"PATCH",
         headers:{
             "Content-type":"application/json",
@@ -77,12 +77,12 @@ fetch(`http://localhost:8080/cars/edit/${_id}`,{
     <Image m={'auto'} w={'350px'} src={temp_img}></Image>
     <Text fontWeight={'semibold'}>Car Model : {temp_model_name}</Text>
     <Text> Car Model year : {temp_model_year}</Text>
-      <Text>Registration Place : {temp_reg_place}</Text>
+      <Text mb='2'>Registration Place : {temp_reg_place}</Text>
       
       {(userID==loggedID)?<>
-      <Button onClick={()=>onOpen()}>Edit</Button>
-      <Button onClick={()=>{HandleDelete(_id)}} >Delete</Button>
-      </>:<><Button onClick={()=>{ toast({
+      <Button mr='2' onClick={()=>onOpen()}>Edit</Button>
+      <Button color={'white'} bg={'red.400'} _hover={{bg:'red.600',color:"white"}} onClick={()=>{HandleDelete(_id)}} >Delete</Button>
+      </>:<><Button color={"white"} bg={'yellow.400'} _hover={{bg:'yellow.600',color:"white"}} onClick={()=>{ toast({
           positions:"top",
           title: 'Sorry.',
           description: "This feature has not been implemented yet.",

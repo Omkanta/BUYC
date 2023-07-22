@@ -4,7 +4,7 @@ import { LOGIN_FAILURE, LOGIN_PENDING, LOGIN_SUCCESSFULL } from "./actionType";
 export const User_Login=(obj)=>(dispatch)=>{
     // console.log(obj);
     dispatch({type:LOGIN_PENDING})
-      return  fetch("http://localhost:8080/users/login",{
+      return  fetch("https://difficult-buckle-ray.cyclic.app/users/login",{
         method:"POST",
         headers:{
             "Content-type":"application/json"
@@ -30,7 +30,7 @@ export const User_Login=(obj)=>(dispatch)=>{
 //User Sign Up
 export const User_Signup=(obj)=>(dispatch)=>{
     // console.log(obj);
-   return  fetch("http://localhost:8080/users/signup",{
+   return  fetch("https://difficult-buckle-ray.cyclic.app/users/signup",{
         method:"POST",
         headers:{
             "Content-type":"application/json"
@@ -50,7 +50,7 @@ export const User_Signup=(obj)=>(dispatch)=>{
 //Car added
 export const Add_Car=(obj)=>(dispatch)=>{
 
-   return  fetch("http://localhost:8080/cars/add",{
+   return  fetch("https://difficult-buckle-ray.cyclic.app/cars/add",{
         method:"POST",
         headers:{
             "Content-type":"application/json",
@@ -61,10 +61,20 @@ export const Add_Car=(obj)=>(dispatch)=>{
     .catch(err=>{console.log(err); return false})
 }
 
-export const Get_Car=()=>{
-   return  fetch("http://localhost:8080/cars").then((res)=>res.json())
-    .then((res)=>{
-        console.log(res);
-        return res
-    }).catch(err=>console.log(err))
+export const Get_Car=(color)=>{
+    // console.log(color);
+    if(color){
+        return  fetch(`https://difficult-buckle-ray.cyclic.app/cars?color=${color}`).then((res)=>res.json())
+        .then((res)=>{
+            // console.log(res);
+            return res
+        }).catch(err=>console.log(err))
+    }else{
+        return  fetch("https://difficult-buckle-ray.cyclic.app/cars").then((res)=>res.json())
+        .then((res)=>{
+            // console.log(res);
+            return res
+        }).catch(err=>console.log(err))
+    }
+
 }
